@@ -1,0 +1,12 @@
+{
+    "mail_host":"smtp.gmail.com",
+    "mail_user":"surajrock8@gmail.com",
+    "mail_password":"Surajprathikkumar08",
+    "mail_clientId":"1031229923868-tdenh505pt45u5281dea6p6q7qc4lfom.apps.googleusercontent.com",
+    "mail_clientSecret":"RjrMKvt8XdwUZWsAl1KCEepj",
+    "mail_refreshToken":"1%2FODU-Ajf7zlHB0tWqQ2EPF74sKKHpUQHGcYXz7kW_On8",
+
+    
+    "mail_subject":"Xebia Recruits",
+    "test_link":"http://192.168.2.212:3001/"
+}
