@@ -1,5 +1,5 @@
 const _mailer=require('./mailconnect.js');
-const _questionpaper=require('./question_paper.js');
+let _questionpaper=require('./question_paper.js');
 
 const _addusers=(req,res)=>{
    const cone=req.app.get('sql-connection');
@@ -17,12 +17,13 @@ const _addusers=(req,res)=>{
        var message=query[i].message;
        var password=Math.random().toString(36).slice(-8);
        var duration=query[i].duration;
-       var check=1;
        var ttype=query[i].ttype;
+       var prog_language=query[i].prog_language;
+
+       var check=1;
        let dbPromise=(email,easy_ques,medium_ques,hard_ques,message,password,duration)=>new Promise((resp,rej)=>{
-           cone.query(`insert into user_login values("${email}","${easy_ques}","${medium_ques}","${hard_ques}","${message}","${password}","${duration}","${ttype}");`,function(err,result){
+           cone.query(`insert into user_login values("${email}","${easy_ques}","${medium_ques}","${hard_ques}","${message}","${password}","${duration}","${ttype}","${prog_language}");`,function(err,result){
                dbcount++;
-               console.log('email is '+email);
                 if(err)
                    {
                        check=0;
@@ -33,29 +34,39 @@ const _addusers=(req,res)=>{
                    {
                        check=1;
                        _mailer(email,password,message);
-                       _questionpaper(req,email,easy_ques,medium_ques,hard_ques,duration,ttype);
-                       resp(check);
+                     
+                       _questionpaper(req,email,easy_ques,medium_ques,hard_ques,duration,ttype,prog_language).then(
+                        (r_val) => {
+                           
+                            cone.query(`delete from user_login where email="${email}";`,function(err,result){
+                               
+                            });
+                            resp(r_val);
+                        
+                        }
+                       );
+                       
                    }
             })
        });
 
-       dbPromise(email,easy_ques,medium_ques,hard_ques,message,password,duration,ttype).then((successMessage) => {
-       if(dbcount==query.length)
-           resolve(emails);
+       dbPromise(email,easy_ques,medium_ques,hard_ques,message,password,duration,ttype).then((flag) => {
+
+        
+          resolve(flag);
        })
    }
          });
 
-         myFirstPromise.then((successMessage) => {
-           console.log("Yatotaly! " + emails.length);
-           if(emails.length>0)
+         myFirstPromise.then((flag) => {
+           if(emails.length>0||flag==0)
            {
                var result={
                    "message":"0",
                    "emails":emails
                }
                res.send(result);
-               }    
+           }    
                else{
                    var result={
                        "message":"1",

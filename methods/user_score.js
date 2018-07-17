@@ -23,25 +23,25 @@ const _score =(req,res)=>{
         
         if(flag==0)
         {
-            var status={"eval_status":`The score is ${correct}/${result.length}`}
+            var status={"eval_status":`${correct}/${result.length}`}
             res.send(status);
         } 
         else
         {
             if(result[0].status=="0")
             {
-                var status={"eval_status":"Test Not Started"};
+                var status={"eval_status":"0"};
                 res.send(status);
             }
             
             else if(result[0].status=="-1")
             {
-                var status={"eval_status":"Test in Process or Incomplete"}
+                var status={"eval_status":"-1"}
                 res.send(status);
             }
             else if(result[0].status=="1")
             {
-                var status={"eval_status":"Test Yet to be Evaluted"}
+                var status={"eval_status":"1"}
                 res.send(status);
             }
             

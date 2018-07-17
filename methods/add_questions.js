@@ -10,9 +10,10 @@ const _question=(req,res)=>{
         var options=query[i].options;
         var answers=query[i].answers;
         var difficulty=query[i].difficulty;
+        var language=query[i].language;
         
         
-        cone.query(`insert into questions(qtype,question,options,answers,difficulty) values("${qtype}","${question}","${options}","${answers}","${difficulty}");`,function(err,result){
+        cone.query(`insert into questions(qtype,question,options,answers,difficulty,language) values("${qtype}","${question}","${options}","${answers}","${difficulty}","${language}");`,function(err,result){
             if(err)
             console.log(err);
             
