@@ -20,9 +20,9 @@ const _userlogin=(req,res)=>{
             {
                 if(result.length==0)
                 {
-                    var okay={
+                    var okay=[{
                         "message":"0"
-                    }
+                    }]
                     res.send(okay);
                 }
                 else
@@ -44,9 +44,9 @@ const _userlogin=(req,res)=>{
                     })
                 }
                 else{
-                    var okay={
+                    var okay=[{
                         "message":"0"
-                    }
+                    }]
                     res.send(okay);
                 }
                 
