@@ -1,3 +1,4 @@
+const config= require('../config.json');
 const _adminlogin=(req,res)=>{
     const cone=req.app.get('sql-connection');
     
@@ -12,7 +13,7 @@ const _adminlogin=(req,res)=>{
     {
     var username=req.body.username;
     var password=req.body.password;
-    cone.query(`select password from admin_login where username="${username}"`,function(err,result){
+    cone.query(`select password from ${config.Admin_Login} where username="${username}"`,function(err,result){
             if(err)
             {
                 console.log("no")

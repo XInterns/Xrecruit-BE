@@ -1,3 +1,4 @@
+const config= require('../config.json');
 const _question=(req,res)=>{
     const cone=req.app.get('sql-connection');
     var query=req.body;
@@ -13,7 +14,7 @@ const _question=(req,res)=>{
         var language=query[i].language;
         
         
-        cone.query(`insert into questions(qtype,question,options,answers,difficulty,language) values("${qtype}","${question}","${options}","${answers}","${difficulty}","${language}");`,function(err,result){
+        cone.query(`insert into ${config.Questions}(qtype,question,options,answers,difficulty,language) values("${qtype}","${question}","${options}","${answers}","${difficulty}","${language}");`,function(err,result){
             if(err)
             console.log(err);
             

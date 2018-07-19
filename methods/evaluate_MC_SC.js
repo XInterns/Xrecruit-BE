@@ -1,8 +1,9 @@
 const express=require("express");
 const app=express();
+const config= require('../config.json');
 const _evaluateMCSC=(req,email)=>{
     const cone=req.app.get('sql-connection');
-    cone.query(`select t.qid,t.user_answers,q.answers,q.qtype from test as t,questions as q where q.qid=t.qid and t.email="${email}";`,function(err,result){
+    cone.query(`select t.qid,t.user_answers,q.answers,q.qtype from ${config.Test} as t,${config.Questions} as q where q.qid=t.qid and t.email="${email}";`,function(err,result){
         if(err)
             console.log(err)
         else{
@@ -11,13 +12,13 @@ const _evaluateMCSC=(req,email)=>{
                 if(result[i].qtype=="SC"){
                     if(result[i].user_answers===result[i].answers)
                     {
-                        cone.query(`update test set eval="CORRECT" where qid="${result[i].qid}" and email="${email}";`,function(err,result){
+                        cone.query(`update ${config.Test} set eval="CORRECT" where qid="${result[i].qid}" and email="${email}";`,function(err,result){
                             if(err)
                             console.log(err);
                         })
                     }
                     else{
-                        cone.query(`update test set eval="WRONG" where qid="${result[i].qid}" and email="${email}";`,function(err,result){
+                        cone.query(`update ${config.Test} set eval="WRONG" where qid="${result[i].qid}" and email="${email}";`,function(err,result){
                             if(err)
                             console.log(err);
                         })
@@ -26,7 +27,7 @@ const _evaluateMCSC=(req,email)=>{
                 if(result[i].qtype=="MC"){
                     if(result[i].user_answers==null)
                     {
-                        cone.query(`update test set eval="WRONG" where qid="${result[i].qid}" and email="${email}";`,function(err,result){
+                        cone.query(`update ${config.Test} set eval="WRONG" where qid="${result[i].qid}" and email="${email}";`,function(err,result){
                                     if(err)
                                     console.log(err);
                                 })
@@ -40,14 +41,14 @@ const _evaluateMCSC=(req,email)=>{
                             //check both array
                             if(user.toString()==ans.toString())
                             {
-                                cone.query(`update test set eval="CORRECT" where qid="${result[i].qid}" and email="${email}";`,function(err,result){
+                                cone.query(`update ${config.Test} set eval="CORRECT" where qid="${result[i].qid}" and email="${email}";`,function(err,result){
                                     if(err)
                                     console.log(err);
                                 })
                             }
                             else
                             {
-                                cone.query(`update test set eval="WRONG" where qid="${result[i].qid}" and email="${email}";`,function(err,result){
+                                cone.query(`update ${config.Test} set eval="WRONG" where qid="${result[i].qid}" and email="${email}";`,function(err,result){
                                     if(err)
                                     console.log(err);
                                 })
@@ -56,7 +57,7 @@ const _evaluateMCSC=(req,email)=>{
                         }
                         else
                         {
-                            cone.query(`update test set eval="WRONG" where qid="${result[i].qid}" and email="${email}";`,function(err,result){
+                            cone.query(`update ${config.Test} set eval="WRONG" where qid="${result[i].qid}" and email="${email}";`,function(err,result){
                                 if(err)
                                 console.log(err);
                             })

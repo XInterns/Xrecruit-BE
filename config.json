@@ -8,5 +8,12 @@
 
     
     "mail_subject":"Xebia Recruits",
-    "test_link":"http://192.168.2.212:3001/"
+    "test_link":"http://192.168.2.212:3001/",
+    
+    "Admin_Login":"admin_login",
+    "User_Details":"user_details",
+    "Languages":"languages",
+    "Questions":"questions",
+    "Test":"test",
+    "User_Login":"user_login"
 }

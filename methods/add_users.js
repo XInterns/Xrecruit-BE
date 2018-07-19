@@ -1,6 +1,6 @@
 const _mailer=require('./mailconnect.js');
 let _questionpaper=require('./question_paper.js');
-
+const config= require('../config.json');
 const _addusers=(req,res)=>{
    const cone=req.app.get('sql-connection');
    var query=req.body;
@@ -22,7 +22,7 @@ const _addusers=(req,res)=>{
 
        var check=1;
        let dbPromise=(email,easy_ques,medium_ques,hard_ques,message,password,duration)=>new Promise((resp,rej)=>{
-           cone.query(`insert into user_login values("${email}","${easy_ques}","${medium_ques}","${hard_ques}","${message}","${password}","${duration}","${ttype}","${prog_language}");`,function(err,result){
+           cone.query(`insert into ${config.User_Login} values("${email}","${easy_ques}","${medium_ques}","${hard_ques}","${message}","${password}","${duration}","${ttype}","${prog_language}");`,function(err,result){
                dbcount++;
                 if(err)
                    {
@@ -38,7 +38,7 @@ const _addusers=(req,res)=>{
                        _questionpaper(req,email,easy_ques,medium_ques,hard_ques,duration,ttype,prog_language).then(
                         (r_val) => {
                            
-                            cone.query(`delete from user_login where email="${email}";`,function(err,result){
+                            cone.query(`delete from ${config.User_Login} where email="${email}";`,function(err,result){
                                
                             });
                             resp(r_val);

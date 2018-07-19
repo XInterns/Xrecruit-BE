@@ -1,3 +1,4 @@
+const config= require('../config.json');
 const _userlogin=(req,res)=>{
     const cone=req.app.get('sql-connection');
         if(req.body.username==undefined){
@@ -10,7 +11,7 @@ const _userlogin=(req,res)=>{
     {
     var username=req.body.username;
     var password=req.body.password;
-    cone.query(`select password from user_login where email="${username}"`,function(err,result){
+    cone.query(`select password from ${config.User_Login} where email="${username}"`,function(err,result){
             if(err)
             {
                 console.log("no")
@@ -26,16 +27,18 @@ const _userlogin=(req,res)=>{
                 }
                 else
                 if(result[0].password==password){
-                    cone.query(`select * from test where email="${username}"`,function(err,result){
+                    cone.query(`select * from ${config.Test} where email="${username}"`,function(err,result){
                         if(err)
                         console.log(err);
                         else{
-                            result.push({"message":"1"});
-                            res.send(result);
+                            results=[];
+                            results.push({"message":"1"});
+                            results.push(result)
+                            res.send(results);
                             
                         }
                     })
-                    cone.query(`update test set status="-1" where email="${username}"`,function(err,result){
+                    cone.query(`update ${config.Test} set status="-1" where email="${username}"`,function(err,result){
                         if(err)
                         console.log(err); 
                     })

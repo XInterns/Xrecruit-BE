@@ -1,9 +1,9 @@
-
+const config= require('../config.json');
 const _score =(req,res)=>{
     const cone=req.app.get('sql-connection');
 
     var email=req.params.email;
-    cone.query(`select status,eval from test where email="${email}"`,function(err,result){
+    cone.query(`select status,eval from ${config.Test} where email="${email}"`,function(err,result){
             if(err)
             console.log(err);
         var flag=0;

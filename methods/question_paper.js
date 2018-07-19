@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-
+const config= require('../config.json');
 var check=(prog,lang)=>{
     for(let i=0;i<prog.length;i++){
         for(let j=0;j<lang.length;j++){
@@ -17,7 +17,7 @@ const _questionpaper=(req,email,easy_ques,medium_ques,hard_ques,duration,ttype,p
     var r_val=1;
     let dbPromise=(cone)=>new Promise((resp,rej)=>{
     
-    cone.query(`SELECT * FROM questions`,function(err,result){
+    cone.query(`SELECT * FROM ${config.Questions}`,function(err,result){
         if(err){
             console.log(err)
         }
@@ -60,7 +60,7 @@ const _questionpaper=(req,email,easy_ques,medium_ques,hard_ques,duration,ttype,p
                 var index=easy.indexOf(item);
                 easy.splice(index,1);
                 
-                cone.query(`insert into test(email,question,options,duration,ttype,status,qtype,qid,eval) values("${email}","${item.question}","${item.options}","${duration}","${ttype}","0","${item.qtype}","${item.qid}","pending");`,function(err,result){
+                cone.query(`insert into ${config.Test}(email,question,options,duration,ttype,status,qtype,qid,eval) values("${email}","${item.question}","${item.options}","${duration}","${ttype}","0","${item.qtype}","${item.qid}","pending");`,function(err,result){
                     if(err)
                     console.log(err);
                     
@@ -73,7 +73,7 @@ const _questionpaper=(req,email,easy_ques,medium_ques,hard_ques,duration,ttype,p
                 var item = medium[Math.floor(Math.random()*medium.length)];
                 var index=medium.indexOf(item);
                 medium.splice(index,1);
-                cone.query(`insert into test(email,question,options,duration,ttype,status,qtype,qid,eval) values("${email}","${item.question}","${item.options}","${duration}","${ttype}","0","${item.qtype}","${item.qid}","pending");`,function(err,result){
+                cone.query(`insert into ${config.Test}(email,question,options,duration,ttype,status,qtype,qid,eval) values("${email}","${item.question}","${item.options}","${duration}","${ttype}","0","${item.qtype}","${item.qid}","pending");`,function(err,result){
                     if(err)
                     console.log(err);
                     
@@ -87,7 +87,7 @@ const _questionpaper=(req,email,easy_ques,medium_ques,hard_ques,duration,ttype,p
                 var item = hard[Math.floor(Math.random()*hard.length)];
                 var index=hard.indexOf(item);
                 hard.splice(index,1);
-                cone.query(`insert into test(email,question,options,duration,ttype,status,qtype,qid,eval) values("${email}","${item.question}","${item.options}","${duration}","${ttype}","0","${item.qtype}","${item.qid}","pending");`,function(err,result){
+                cone.query(`insert into ${config.Test}(email,question,options,duration,ttype,status,qtype,qid,eval) values("${email}","${item.question}","${item.options}","${duration}","${ttype}","0","${item.qtype}","${item.qid}","pending");`,function(err,result){
                     if(err)
                     console.log(err);
                     
