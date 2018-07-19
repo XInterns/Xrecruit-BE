@@ -17,13 +17,15 @@ const _showquestions=require('./get_allquestions')
 const _deletequestion=require('./delete_questions')
 const _addlang=require('./add_languages')
 const _getlang=require('./get_languages')
+const _gettype=require('./get_type')
 
 router.get('/getscore/:email',_score);
 router.get('/gettestdata/:email/:type',_resultget);
 router.get('/getinfo/:email',_testinfo);
 router.get('/getuserdetails/:email',_getuserdetails);
-router.get('/getquestions',_showquestions);
+router.get('/getquestions/:question/:qtype',_showquestions);
 router.get('/getlanguage/:lang',_getlang);
+router.get('/gettype',_gettype);
 
 router.post('/addlanguage',_addlang);
 router.post('/deletequestion',_deletequestion);

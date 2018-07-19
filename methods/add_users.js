@@ -16,7 +16,7 @@ const _addusers=(req,res)=>{
        var hard_ques=parseInt(query[i].hard_ques);
        var message=query[i].message;
        var password=Math.random().toString(36).slice(-8);
-       var duration=query[i].duration;
+       var duration=query[i].duration*60;
        var ttype=query[i].ttype;
        var prog_language=query[i].prog_language;
 
@@ -59,15 +59,22 @@ const _addusers=(req,res)=>{
          });
 
          myFirstPromise.then((flag) => {
-           if(emails.length>0||flag==0)
+           if(emails.length>0)
            {
                var result={
                    "message":"0",
                    "emails":emails
                }
                res.send(result);
-           }    
-               else{
+           }   else
+           if(flag==0) 
+           {
+            var result={
+                "message":"-1",
+                "emails":emails
+            }
+            res.send(result);
+        }   else{
                    var result={
                        "message":"1",
                        "emails":""
